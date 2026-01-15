@@ -35,11 +35,17 @@ Config: Environment variables (python-dotenv)
 
 # Project Structure
 app.py
+
 config.py
+
 db_connector.py
+
 insert_test_data.py
+
 requirements.txt
+
 models/
+
 templates/
 
 
@@ -49,9 +55,13 @@ pip install -r requirements.txt
 
 
 # Configure database (.env)
+
 DB_HOST=localhost
+
 DB_USER=root
+
 DB_PASSWORD=your_password
+
 DB_NAME=pharma_db
 
 
@@ -61,15 +71,13 @@ python app.py
 Open: http://127.0.0.1:5000/
 
 
-# Insert Sample Data (Optional)
+# Insert Sample Data 
 python insert_test_data.py
 
 
 # Future Enhancements
 
 Expiry alerts
-
-Sales reports
 
 User authentication
 
