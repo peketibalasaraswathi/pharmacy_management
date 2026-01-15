@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="mb-4">Pharmacy Dashboard</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-warning">
+                <h5>Medicines Expiring Soon</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Expiry Date</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for medicine in expiring_soon %}
+                        <tr>
+                            <td>{{ medicine.name }}</td>
+                            <td>{{ medicine.expiry_date }}</td>
+                            <td>{{ medicine.quantity }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h5>Recent Sales</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Medicine</th>
+                            <th>Quantity</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sale in recent_sales %}
+                        <tr>
+                            <td>{{ sale.name }}</td>
+                            <td>{{ sale.quantity }}</td>
+                            <td>{{ sale.sale_date }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

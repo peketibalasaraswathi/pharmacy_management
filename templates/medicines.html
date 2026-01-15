@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="mb-4">Medicine Inventory</h1>
+<a href="{{ url_for('add_medicine') }}" class="btn btn-primary mb-3">Add New Medicine</a>
+
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Batch No</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Expiry Date</th>
+            <th>Supplier</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for medicine in medicines %}
+        <tr>
+            <td>{{ medicine.name }}</td>
+            <td>{{ medicine.batch_no }}</td>
+            <td>{{ medicine.quantity }}</td>
+            <td>{{ "%.2f"|format(medicine.price) }}</td>
+            <td>{{ medicine.expiry_date }}</td>
+            <td>{{ medicine.supplier }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

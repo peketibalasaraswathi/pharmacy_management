@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="mb-4">Record Sale</h1>
+
+<form method="POST" action="{{ url_for('record_sale') }}">
+    <div class="mb-3">
+        <label for="medicine_id" class="form-label">Medicine</label>
+        <select class="form-select" id="medicine_id" name="medicine_id" required>
+            <option value="">Select Medicine</option>
+            {% for medicine in medicines %}
+            <option value="{{ medicine.id }}">{{ medicine.name }} (Batch: {{ medicine.batch_no }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="quantity" class="form-label">Quantity</label>
+        <input type="number" class="form-control" id="quantity" name="quantity" min="1" required>
+    </div>
+    <div class="mb-3">
+        <label for="customer_info" class="form-label">Customer Info (Optional)</label>
+        <textarea class="form-control" id="customer_info" name="customer_info" rows="2"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Record Sale</button>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imatech</title>
+
+    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS -->
+</head>
+<body>
+    <div class="container">
+        <h1>Imatech</h1>
+
+        <input type="file" id="imageInput" accept="image/*">
+        <button onclick="processImage()">Upload</button>
+
+        <div id="previewContainer">
+            <img id="preview" src="#" alt="Image preview" style="display:none;">
+        </div>
+        <div id="result">
+            <h3>Extracted Text:</h3>
+            <div id="textOutput"></div>
+            <audio id="audioPlayer" controls></audio>
+        </div>
+    </div>
+
+    <script>
+        // Image preview
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const preview = document.getElementById('preview');
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        async function processImage() {
+            const fileInput = document.getElementById('imageInput');
+            const loader = document.getElementById('loader');
+            const textOutput = document.getElementById('textOutput');
+            const audioPlayer = document.getElementById('audioPlayer');
+
+            if (!fileInput.files[0]) {
+                alert('Please select an image file');
+                return;
+                alert('Please select an image file');
+                return;
+            }
+
+            loader.style.display = 'block';
+            
+            try {
+                const formData = new FormData();
+                formData.append('image', fileInput.files[0]);
+
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                console.log('Response status:', response.status); // Log response status
+                const text = await response.text(); // Get response as text
+                console.log('Response text:', text); // Log the raw response for debugging
+
+                if (!text) {
+                    throw new Error('Empty response from server');
+                }
+
+                const data = JSON.parse(text); // Parse JSON from text
+
+                if (!data || data.error) {
+                    throw new Error(data ? data.error : 'Invalid response');
+                }
+
+                textOutput.textContent = data.text;
+                audioPlayer.src = data.audio_url;
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                loader.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
